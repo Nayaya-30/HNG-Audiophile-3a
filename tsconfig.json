@@ -2,7 +2,9 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "next/link": ["src/components/CustomLink"]
+      "next/link": [
+        "src/components/CustomLink"
+      ]
     },
     "target": "es5",
     "lib": [
@@ -20,8 +22,8 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "jsx": "preserve"
   },
   "include": [
     "next-env.d.ts",
