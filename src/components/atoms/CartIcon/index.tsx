@@ -1,13 +1,13 @@
 // src/components/atoms/CartIcon.tsx
-'use client'
+"use client"
 
-import { Button, Center } from '@chakra-ui/react'
-import { useSelector } from 'react-redux'
-import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { Button, Center } from "@chakra-ui/react"
+import { useSelector } from "react-redux"
+import Image from "next/image"
+import { useEffect, useState } from "react"
 
-import { useModal } from 'store/ModalContextProvider'
-import { totalQuantity } from 'store/CartSlice'
+import { useModal } from "store/ModalContextProvider"
+import { totalQuantity } from "store/CartSlice"
 
 const CartIcon = (): JSX.Element => {
   const { onCartModalOpen } = useModal()
@@ -29,7 +29,7 @@ const CartIcon = (): JSX.Element => {
       p="0"
       onClick={onCartModalOpen}
       aria-label="Show Cart"
-      _hover={{ bg: 'transparent' }}
+      _hover={{ bg: "transparent" }}
       fontWeight="normal"
     >
       <Image

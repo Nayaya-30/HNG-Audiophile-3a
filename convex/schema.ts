@@ -23,7 +23,7 @@ export default defineSchema({
     zip: v.string(),
     city: v.string(),
     country: v.string(),
-    paymentMethod: v.union(v.literal('e-Money'), v.literal('Cash on Delivery')),
+    paymentMethod: v.union(v.literal("e-Money"), v.literal("Cash on Delivery")),
     eMoneyNumber: v.optional(v.string()),
     eMoneyPin: v.optional(v.string()),
     items: v.array(
@@ -36,7 +36,7 @@ export default defineSchema({
     ),
     total: v.number(),
     grandTotal: v.number(),
-    status: v.union(v.literal("pending"), v.literal("shipped"), v.literal('confirmed'), v.literal("delivered")),
+    status: v.union(v.literal("pending"), v.literal("shipped"), v.literal("confirmed"), v.literal("delivered")),
     createdAt: v.number(),
   }).index("by_email", ["email"]),
 });

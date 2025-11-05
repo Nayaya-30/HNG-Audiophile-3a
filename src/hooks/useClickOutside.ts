@@ -1,5 +1,5 @@
 // src/hooks/useClickOutside.ts
-import { useEffect, RefObject } from 'react'
+import { useEffect, RefObject } from "react"
 
 /**
  * Calls `handler` when a click occurs **outside** any of the refs.
@@ -11,7 +11,7 @@ import { useEffect, RefObject } from 'react'
 function useClickOutside<T extends HTMLElement = HTMLElement>(
   refs: RefObject<T> | RefObject<T>[],
   handler: (event: MouseEvent | TouchEvent) => void,
-  events: ('mousedown' | 'touchstart')[] = ['mousedown', 'touchstart'],
+  events: ("mousedown" | "touchstart")[] = ["mousedown", "touchstart"],
 ): void {
   useEffect(() => {
     const listener = (event: MouseEvent | TouchEvent) => {

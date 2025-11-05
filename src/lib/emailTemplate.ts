@@ -7,7 +7,7 @@ export const generateEmailHTML = (order: any) => `
   <title>Order Confirmation - Audiophile</title>
   <style>
     body { 
-      font-family: 'Manrope', Arial, sans-serif; 
+      font-family: "Manrope", Arial, sans-serif; 
       background: #f4f4f4; 
       padding: 20px;
       color: #000000;
@@ -125,7 +125,7 @@ export const generateEmailHTML = (order: any) => `
       <div class="order-details">
         <div class="detail-row">
           <div class="detail-label">Order Number:</div>
-          <div>#${order._id?.slice(-8).toUpperCase() || 'N/A'}</div>
+          <div>#${order._id?.slice(-8).toUpperCase() || "N/A"}</div>
         </div>
         <div class="detail-row">
           <div class="detail-label">Order Date:</div>
@@ -133,7 +133,7 @@ export const generateEmailHTML = (order: any) => `
         </div>
         <div class="detail-row">
           <div class="detail-label">Payment Method:</div>
-          <div>${order.paymentMethod || 'Not specified'}</div>
+          <div>${order.paymentMethod || "Not specified"}</div>
         </div>
       </div>
       
@@ -160,7 +160,7 @@ export const generateEmailHTML = (order: any) => `
         </div>
       `,
         )
-        .join('')}
+        .join("")}
       
       <div class="totals">
         <div class="total-row">
@@ -178,7 +178,7 @@ export const generateEmailHTML = (order: any) => `
           <div>VAT (${order.vatPercent || 20}%):</div>
           <div>$${order.vat.toFixed(2)}</div>
         </div>`
-            : ''
+            : ""
         }
         <div class="total-row grand-total">
           <div>GRAND TOTAL:</div>

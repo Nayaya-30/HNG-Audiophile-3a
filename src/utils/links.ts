@@ -1,4 +1,4 @@
-export const links = [
+exportconst links = [
   {
     id: 1,
     text: 'home',
@@ -11,7 +11,7 @@ export const links = [
     img: `/images/shared/desktop/image-category-thumbnail-headphones.png`,
   },
   {
-    id: 3,
+   id: 3,
     text: 'Speakers',
     url: '/speakers',
     img: '/images/shared/desktop/image-category-thumbnail-speakers.png',

@@ -1,6 +1,6 @@
 // convex/createOrder.ts
-import { mutation } from './_generated/server'
-import { v } from 'convex/values'
+import { mutation } from "./_generated/server"
+import { v } from "convex/values"
 
 export default mutation({
   args: {
@@ -11,7 +11,7 @@ export default mutation({
     zip: v.string(),
     city: v.string(),
     country: v.string(),
-    paymentMethod: v.union(v.literal('e-Money'), v.literal('Cash on Delivery')),
+    paymentMethod: v.union(v.literal("e-Money"), v.literal("Cash on Delivery")),
     eMoneyNumber: v.optional(v.string()),
     eMoneyPin: v.optional(v.string()),
     items: v.array(
@@ -26,10 +26,10 @@ export default mutation({
     grandTotal: v.number(),
   },
   handler: async (ctx, args) => {
-    const orderId = await ctx.db.insert('orders', {
+    const orderId = await ctx.db.insert("orders", {
       ...args,
       createdAt: Date.now(),
-      status: 'confirmed',
+      status: "confirmed",
     })
     
     // Return the full order with ID for email processing

@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import React from 'react'
-import NextLink, { LinkProps } from 'next/link'
+import React from "react"
+import NextLink, { LinkProps } from "next/link"
 
 type CustomLinkProps = LinkProps &
   React.AnchorHTMLAttributes<HTMLAnchorElement> & {
@@ -22,9 +22,9 @@ export const CustomLink: React.FC<CustomLinkProps> = ({
   // If the child is already an <a>, enforce legacy mode
   const isAnchorChild =
     React.isValidElement(children) &&
-    (children.type === 'a' ||
-      (typeof children.type === 'string' &&
-        children.type.toLowerCase() === 'a'))
+    (children.type === "a" ||
+      (typeof children.type === "string" &&
+        children.type.toLowerCase() === "a"))
 
   // Force legacyBehavior if needed
   if (legacy || isAnchorChild) {

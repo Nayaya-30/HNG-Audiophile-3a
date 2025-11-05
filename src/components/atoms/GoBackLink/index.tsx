@@ -1,5 +1,5 @@
-import { Button } from '@chakra-ui/react'
-import { useRouter } from 'next/router'
+import { Button } from "@chakra-ui/react"
+import { useRouter } from "next/router"
 
 const GoBackLink = (): JSX.Element => {
   const router = useRouter()
@@ -9,7 +9,7 @@ const GoBackLink = (): JSX.Element => {
       as="a"
       variant="link"
       onClick={() => router.back()}
-      mt={{ base: '2rem', sm: '1rem', lg: '5rem' }}
+      mt={{ base: "2rem", sm: "1rem", lg: "5rem" }}
       fontSize="0.9375rem"
     >
       Go back

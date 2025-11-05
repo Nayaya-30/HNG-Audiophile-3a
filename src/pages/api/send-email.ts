@@ -1,10 +1,10 @@
 // src/pages/api/send-email.ts
-import type { NextApiRequest, NextApiResponse } from 'next'
-import nodemailer from 'nodemailer'
+import type { NextApiRequest, NextApiResponse } from "next"
+import nodemailer from "nodemailer"
 
 // Create reusable transporter
 const transporter = nodemailer.createTransport({
-	host: 'smtp.gmail.com',
+	host: "smtp.gmail.com",
 	port: 587,
 	secure: false,
 	auth: {
@@ -17,15 +17,15 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
-	if (req.method !== 'POST') {
-		return res.status(405).json({ error: 'Method not allowed' })
+	if (req.method !== "POST") {
+		return res.status(405).json({ error: "Method not allowed" })
 	}
 
 	const { to, name, orderItems, grandTotal } = req.body
 
 	// Safety check
 	if (!to || !name || !orderItems) {
-		return res.status(400).json({ error: 'Missing data' })
+		return res.status(400).json({ error: "Missing data" })
 	}
 
 	const itemsHtml = orderItems
@@ -41,7 +41,7 @@ export default async function handler(
       </tr>
     `
 		)
-		.join('')
+		.join("")
 
 	const html = `
     <!DOCTYPE html>
@@ -50,7 +50,7 @@ export default async function handler(
       <meta charset="utf-8" />
       <title>Order Confirmed</title>
       <style>
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #f6f6f6; margin: 0; padding: 20px; }
+        body { font-family: "Helvetica Neue", Arial, sans-serif; background: #f6f6f6; margin: 0; padding: 20px; }
         .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .header { background: #D87D4A; color: white; padding: 40px 30px; text-align: center; }
         .header h1 { margin: 0; font-size: 28px; }
@@ -91,7 +91,7 @@ export default async function handler(
 
 	try {
 		await transporter.sendMail({
-			from: '"Audiophile" <noreply@audiophile.com>',
+			from: "\"Audiophile\" <noreply@audiophile.com>",
 			to,
 			subject: `Order Confirmed, ${name}!`,
 			html,
@@ -100,6 +100,6 @@ export default async function handler(
 		res.status(200).json({ success: true })
 	} catch (error) {
 		console.error('Email error:', error)
-		res.status(500).json({ error: 'Failed to send email' })
+		res.status(500).json({ error: "Failed to send email" })
 	}
 }

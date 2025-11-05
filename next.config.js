@@ -55,10 +55,6 @@ const nextConfig = {
     
     return config
   },
-  // Future proof the app directory
-  experimental: {
-    appDir: true,
-  },
 }
 
 module.exports = nextConfig
