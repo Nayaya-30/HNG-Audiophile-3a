@@ -12,11 +12,11 @@
     "react/react-in-jsx-scope": "off",
     "jsx-a11y/anchor-is-valid": "off"
   },
-  "plugins": ["testing-library", "jest-dom"],
   "env": {
     "browser": true,
     "node": true,
     "es6": true
   },
+  "plugin": ["eslint"]
   "parser": "@typescript-eslint/parser"
 }

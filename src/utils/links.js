@@ -1,28 +1,29 @@
-'use strict'
-Object.defineProperty(exports, '__esModule', { value: true })
+"use strict"
+Object.defineProperty(exports, "__esModule", { value: true })
 exports.links = void 0
 exports.links = [
   {
     id: 1,
-    text: 'home',
-    url: '/',
+    text: "home",
+    url: "/",
   },
   {
     id: 2,
-    text: 'Headphones',
-    url: '/headphones',
-    img: '/images/shared/desktop/image-category-thumbnail-headphones.png',
+    text: "Headphones",
+    url: "/headphones",
+    img: "/images/shared/desktop/image-category-thumbnail-headphones.png",
   },
   {
     id: 3,
-    text: 'Speakers',
-    url: '/speakers',
-    img: '/images/shared/desktop/image-category-thumbnail-speakers.png',
+    text: "Speakers",
+    url: "/speakers",
+    img: "/images/shared/desktop/image-category-thumbnail-speakers.png",
   },
   {
     id: 4,
-    text: 'Earphones',
-    url: '/earphones',
-    img: '/images/shared/desktop/image-category-thumbnail-earphones.png',
+    text: "Earphones",
+    url: "/earphones",
+    img: "/images/shared/desktop/image-category-thumbnail-earphones.png",
   },
 ]
+exports.links = links
