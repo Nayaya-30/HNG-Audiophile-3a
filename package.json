@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "prebuild": "npx convex codegen",
+    "prebuild:prod": "npx convex codegen || echo 'Skipping Convex codegen in production'",
     "build": "next build",
+    "build:prod": "npm run prebuild:prod && next build",
     "dev": "next dev",
     "start": "next start",
     "lint": "next lint"
