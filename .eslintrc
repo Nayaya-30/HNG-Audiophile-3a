@@ -1,12 +1,10 @@
 {
 	"extends": [
-		"eslint:recommended",
-		"plugin:react/recommended",
-		"plugin:react-hooks/recommended",
-		"plugin:jsx-a11y/recommended",
-		"plugin:@typescript-eslint/recommended",
-		"plugin:eslint/recommended"
+		"next/core-web-vitals",
+		"plugin:@typescript-eslint/recommended"
 	],
+	"plugins": ["react", "react-hooks", "jsx-a11y", "@typescript-eslint"],
+	"parser": "@typescript-eslint/parser",
 	"rules": {
 		"react/prop-types": "off",
 		"react/react-in-jsx-scope": "off",
@@ -16,7 +14,5 @@
 		"browser": true,
 		"node": true,
 		"es6": true
-	},
-	"plugins": ["eslint"],
-	"parser": "@typescript-eslint/parser"
+	}
 }
