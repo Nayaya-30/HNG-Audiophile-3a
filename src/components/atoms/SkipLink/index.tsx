@@ -1,4 +1,4 @@
-import { Button } from '@chakra-ui/react'
+import { Button } from "@chakra-ui/react"
 
 const SkipLink = (): JSX.Element => {
   return (
@@ -11,7 +11,7 @@ const SkipLink = (): JSX.Element => {
       zIndex="skipLink"
       transform="translateX(-200%)"
       _focus={{
-        transform: 'translateX(0)',
+        transform: "translateX(0)",
       }}
       transition="transform 0.3s ease-out"
     >
