@@ -12,8 +12,6 @@ const ProductPage: React.FC<{ product: Product }> = ({
   return (
     <>
       <Head>
-        <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
-        <script>eruda.init();</script>
         <title>{`Audiophile shop - ${product.name}`}</title>
       </Head>
       <ProductPageTemplate product={product} />

@@ -1,4 +1,4 @@
-import {
+import{
   Html,
   Head,
   Body,
@@ -12,9 +12,10 @@ import {
   Column,
   Link,
 } from "@react-email/components"
+import { Order } from 'models/Order'
 
-export default function OrderConfirmation({ order }: { order: any }) {
-  return (
+export default function OrderConfirmation({ order }: { order: Order }) {
+ return (
     <Html>
       <Head />
       <Body
@@ -27,7 +28,7 @@ export default function OrderConfirmation({ order }: { order: any }) {
       >
         <Container
           style={{
-            maxWidth: "600px",
+            maxWidth:"600px",
             margin: "0 auto",
             backgroundColor: "#ffffff",
           }}
@@ -39,7 +40,7 @@ export default function OrderConfirmation({ order }: { order: any }) {
               backgroundColor: "#000000",
               textAlign: "center",
             }}
-          >
+>
             <Img
               src="https://audiophile-ecommerce-website.netlify.app/assets/shared/desktop/logo.svg"
               alt="Audiophile"
@@ -47,7 +48,7 @@ export default function OrderConfirmation({ order }: { order: any }) {
               height="25"
               style={{ margin: "0 auto", display: "block" }}
             />
-          </Section>
+         </Section>
 
           {/* Main Content */}
           <Section style={{ padding: "40px" }}>
@@ -57,7 +58,7 @@ export default function OrderConfirmation({ order }: { order: any }) {
                 fontWeight: "bold",
                 margin: "0 0 20px",
                 color: "#000000",
-              }}
+}}
             >
               Thank you for your order, {order.name.split(" ")[0]}!
             </Text>
@@ -65,7 +66,7 @@ export default function OrderConfirmation({ order }: { order: any }) {
             <Text
               style={{ fontSize: "16px", margin: "0 0 30px", color: "#000000" }}
             >
-              Your order <strong>#{order.id.slice(0, 8)}</strong> has been
+              Your order<strong>#{order.id.slice(0, 8)}</strong> has been
               confirmed and is now being processed.
             </Text>
 
@@ -91,13 +92,13 @@ export default function OrderConfirmation({ order }: { order: any }) {
                 <strong>Order Date:</strong>{' '}
                 {new Date(order.createdAt).toLocaleDateString()}
               </Text>
-              <Text style={{ margin: "5px 0", color: "#000000" }}>
+              <Text style={{ margin: "5px 0", color:"#000000" }}>
                 <strong>Total:</strong> ${order.grandTotal?.toFixed(2) || "N/A"}
               </Text>
               <Text style={{ margin: "5px 0", color: "#000000" }}>
                 <strong>Payment Method:</strong> {order.paymentMethod}
               </Text>
-            </Section>
+           </Section>
 
             <Hr style={{ border: "1px solid #F1F1F1", margin: "30px 0" }} />
 
@@ -109,7 +110,7 @@ export default function OrderConfirmation({ order }: { order: any }) {
                 color: "#000000",
               }}
             >
-              Shipping Information
+              ShippingInformation
             </Text>
             <Section
               style={{
@@ -155,7 +156,7 @@ export default function OrderConfirmation({ order }: { order: any }) {
                 boxSizing: "border-box",
               }}
             >
-              View Order Status
+              View OrderStatus
             </Button>
           </Section>
 
@@ -169,8 +170,7 @@ export default function OrderConfirmation({ order }: { order: any }) {
           >
             <Row>
               <Column>
-                <Img
-                  src="https://audiophile-ecommerce-website.netlify.app/assets/shared/desktop/logo.svg"
+                <Imgsrc="https://audiophile-ecommerce-website.netlify.app/assets/shared/desktop/logo.svg"
                   alt="Audiophile"
                   width="140"
                   height="25"
@@ -221,7 +221,7 @@ export default function OrderConfirmation({ order }: { order: any }) {
                       style={{
                         color: "#ffffff",
                         textDecoration: "none",
-                        margin: "0 10px",
+                       margin: "0 10px",
                       }}
                     >
                       <Img

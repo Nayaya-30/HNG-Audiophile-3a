@@ -1,5 +1,7 @@
-// src/lib/emailTemplate.ts
-export const generateEmailHTML = (order: any) => `
+//src/lib/emailTemplate.ts
+import{ Order } from 'models/Order'
+
+export const generateEmailHTML = (order: Order) => `
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,22 +20,21 @@ export const generateEmailHTML = (order: any) => `
       margin: 0 auto; 
       background: white; 
       border-radius: 8px; 
-      overflow: hidden;
+     overflow: hidden;
       box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     }
     .header { 
       background: #D87D4A; 
       color: white; 
-      padding: 30px; 
-      text-align: center;
+      padding: 30px;text-align: center;
     }
     .header h1 { margin: 0; font-size: 28px; font-weight: 700; letter-spacing: 1px; }
     .header p { margin: 10px 0 0; font-size: 18px; opacity: 0.9; }
     .logo { max-width: 150px; margin: 0 auto 20px; }
     .content { padding: 30px; }
-    .order-details { background-color: #f8f8f8; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+    .order-details { background-color: #f8f8f8; padding:20px; border-radius: 8px; margin-bottom: 30px; }
     .detail-row { display: flex; margin-bottom: 10px; }
-    .detail-label { font-weight: bold; min-width: 150px; color: #555; }
+    .detail-label { font-weight: bold; min-width: 150px; color: #555;}
     .item { border-bottom: 1px solid #eee; padding: 15px 0; }
     .item:last-child { border-bottom: none; }
     .item-name { font-weight: bold; margin-bottom: 5px; }
@@ -41,7 +42,7 @@ export const generateEmailHTML = (order: any) => `
     .item-price { color: #D87D4A; font-weight: bold; }
     .totals { margin-top: 30px; }
     .total-row { display: flex; justify-content: space-between; margin-bottom: 10px; }
-    .grand-total { font-size: 1.5em; font-weight: bold; color: #D87D4A; border-top: 2px solid #eee; padding-top: 15px; margin-top: 15px; }
+   .grand-total { font-size: 1.5em; font-weight: bold; color: #D87D4A; border-top: 2px solid #eee; padding-top: 15px; margin-top: 15px; }
     .footer { text-align: center; padding: 20px; background: #000; color: #fff; font-size: 14px; }
     .highlight { color: #D87D4A; font-weight: bold; }
   </style>
@@ -82,8 +83,8 @@ export const generateEmailHTML = (order: any) => `
         <div>Phone: ${order.phone}</div>
       </div>
       
-      <h3>Order Items</h3>
-      ${order.items.map((item: any) => `
+     <h3>Order Items</h3>
+      ${order.items.map((item)=> `
         <div class="item">
           <div class="item-name">${item.name}</div>
           <div class="item-details">
@@ -97,7 +98,7 @@ export const generateEmailHTML = (order: any) => `
         <div class="total-row">
           <div>Subtotal:</div>
           <div>$${(order.grandTotal - 50).toFixed(2)}</div>
-        </div>
+</div>
         <div class="total-row">
           <div>Shipping:</div>
           <div>$50.00</div>
@@ -110,7 +111,7 @@ export const generateEmailHTML = (order: any) => `
       
       <p style="margin-top: 30px; color: #666; text-align: center;">
         A confirmation has been sent to <span class="highlight">${order.email}</span>.<br>
-        We'll email you when your order ships.<br>
+        We'll emailyou when your order ships.<br>
         Questions? Just reply to this email.
       </p>
     </div>

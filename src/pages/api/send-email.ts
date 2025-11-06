@@ -2,6 +2,12 @@
 import type { NextApiRequest, NextApiResponse } from "next"
 import nodemailer from "nodemailer"
 
+interface OrderItem {
+  name: string
+  price: number
+  quantity: number
+}
+
 const transporter = nodemailer.createTransport({
 	host: "smtp.gmail.com",
 	port: 587,
@@ -43,7 +49,7 @@ export default async function handler(
 	}
 
 	const itemsHtml = orderItems
-		.map((item: any) => `
+		.map((item: OrderItem) => `
       <tr>
         <td style="padding: 12px 0; border-bottom: 1px solid #eee;">
           <strong>${item.name}</strong> × ${item.quantity}
@@ -90,8 +96,8 @@ export default async function handler(
 			html,
 		})
 		res.status(200).json({ success: true })
-	} catch (error: any) {
-		console.error("EMAIL ERROR:", error.message)
-		res.status(500).json({ error: "Failed to send", details: error.message })
+	} catch (error: unknown) {
+		console.error("EMAIL ERROR:", (error as Error).message)
+		res.status(500).json({ error: "Failed to send", details: (error as Error).message })
 	}
 }
