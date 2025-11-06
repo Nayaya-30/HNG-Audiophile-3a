@@ -12,9 +12,10 @@ import {
   Column,
   Link,
 } from '@react-email/components'
+import { Order } from 'models/Order'
 
-export const ThankYou = ({ order }: { order: any }) => (
-  <Html>
+export const ThankYou = ({ order }: { order: Order }) => (
+ <Html>
     <Head />
     <Body
       style={{
@@ -39,7 +40,7 @@ export const ThankYou = ({ order }: { order: any }) => (
             textAlign: 'center',
           }}
         >
-          <Img
+         <Img
             src="https://audiophile-ecommerce-website.netlify.app/assets/shared/desktop/logo.svg"
             alt="Audiophile"
             width="140"
@@ -48,7 +49,7 @@ export const ThankYou = ({ order }: { order: any }) => (
           />
         </Section>
 
-        {/* Main Content */}
+{/* Main Content */}
         <Section style={{ padding: '40px', textAlign: 'center' }}>
           <Img
             src="https://audiophile-ecommerce-website.netlify.app/assets/shared/desktop/icon-check-mark.svg"
@@ -100,7 +101,7 @@ export const ThankYou = ({ order }: { order: any }) => (
               informed decisions.
             </Text>
 
-            <Button
+           <Button
               href="https://audiophile-ecommerce-website.netlify.app/leave-review"
               style={{
                 background: '#D87D4A',
@@ -132,7 +133,7 @@ export const ThankYou = ({ order }: { order: any }) => (
           </Section>
 
           <Text
-            style={{ fontSize: '16px', margin: '0 0 30px', color: '#000000' }}
+            style={{ fontSize: '16px', margin: '0 0 30px', color: '#000000'}}
           >
             Thanks for choosing Audiophile for your audio needs!
           </Text>
@@ -147,7 +148,7 @@ export const ThankYou = ({ order }: { order: any }) => (
           }}
         >
           <Row>
-            <Column>
+<Column>
               <Img
                 src="https://audiophile-ecommerce-website.netlify.app/assets/shared/desktop/logo.svg"
                 alt="Audiophile"
@@ -200,7 +201,7 @@ export const ThankYou = ({ order }: { order: any }) => (
                     style={{
                       color: '#ffffff',
                       textDecoration: 'none',
-                      margin: '0 10px',
+                     margin: '0 10px',
                     }}
                   >
                     <Img

@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "prebuild": "npx convex codegen",
+    "prebuild:prod": "npx convex codegen || echo 'Skipping Convex codegen in production'",
     "build": "next build",
+    "build:prod": "npm run prebuild:prod && next build",
     "dev": "next dev",
     "start": "next start",
     "lint": "next lint"
@@ -12,20 +14,25 @@
   "dependencies": {
     "convex": "^1.12.0",
     "next": "15.2.5",
+<<<<<<< HEAD
     "react": "18.2.0",
     "react-dom": "18.2.0"
+=======
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+>>>>>>> de664f2a0a07d6865724e426d064d26b4c68c3e9
   },
   "devDependencies": {
     "@types/node": "^20.8.0",
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "eslint": "^8.50.0",
     "eslint-config-next": "^14.1.0",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-react": "^7.33.0",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-jsx-a11y": "^6.8.0",
     "typescript": "^5.3.0"
   }
 }

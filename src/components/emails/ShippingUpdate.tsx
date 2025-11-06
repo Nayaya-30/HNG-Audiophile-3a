@@ -1,4 +1,4 @@
-import * as React from 'react'
+import* as React from 'react'
 import {
   Html,
   Head,
@@ -12,9 +12,10 @@ import {
   Column,
   Link,
 } from '@react-email/components'
+import { Order } from 'models/Order'
 
-export const ShippingUpdate = ({ order }: { order: any }) => (
-  <Html>
+export const ShippingUpdate = ({ order }: { order: Order }) => (
+ <Html>
     <Head />
     <Body
       style={{
@@ -39,7 +40,7 @@ export const ShippingUpdate = ({ order }: { order: any }) => (
             textAlign: 'center',
           }}
         >
-          <Img
+         <Img
             src="https://audiophile-ecommerce-website.netlify.app/assets/shared/desktop/logo.svg"
             alt="Audiophile"
             width="140"
@@ -48,7 +49,7 @@ export const ShippingUpdate = ({ order }: { order: any }) => (
           />
         </Section>
 
-        {/* Main Content */}
+{/* Main Content */}
         <Section style={{ padding: '40px' }}>
           <Text
             style={{
@@ -57,14 +58,14 @@ export const ShippingUpdate = ({ order }: { order: any }) => (
               margin: '0 0 20px',
               color: '#000000',
             }}
-          >
+         >
             Your Order is On the Way!
           </Text>
 
           <Text
             style={{ fontSize: '16px', margin: '0 0 30px', color: '#000000' }}
           >
-            Great news, {order.name.split(' ')[0]}! Your order{' '}
+            Great news, {order.name.split(' ')[0]}! Yourorder{' '}
             <strong>#{order.id.slice(0, 8)}</strong> has been shipped and is on
             its way to you.
           </Text>
@@ -73,7 +74,7 @@ export const ShippingUpdate = ({ order }: { order: any }) => (
             style={{
               backgroundColor: '#f8f8f8',
               padding: '20px',
-              borderRadius: '8px',
+              borderRadius:'8px',
               marginBottom: '30px',
             }}
           >
@@ -85,7 +86,7 @@ export const ShippingUpdate = ({ order }: { order: any }) => (
                 color: '#000000',
               }}
             >
-              Shipping Details
+             Shipping Details
             </Text>
             <Text style={{ margin: '5px 0', color: '#000000' }}>
               <strong>Tracking Number:</strong> SHIP-{order.id.slice(0, 8)}
@@ -126,7 +127,7 @@ export const ShippingUpdate = ({ order }: { order: any }) => (
               textAlign: 'center',
             }}
           >
-            You'll receive another email when your package is out for delivery.
+You'll receive another email when your package is out for delivery.
           </Text>
         </Section>
 
@@ -137,7 +138,7 @@ export const ShippingUpdate = ({ order }: { order: any }) => (
             backgroundColor: '#000000',
             textAlign: 'center',
           }}
-        >
+       >
           <Row>
             <Column>
               <Img
@@ -145,14 +146,14 @@ export const ShippingUpdate = ({ order }: { order: any }) => (
                 alt="Audiophile"
                 width="140"
                 height="25"
-                style={{ margin: '0 auto 20px', display: 'block' }}
+                style={{ margin: '0 auto 20px', display:'block' }}
               />
               <Text style={{ color: '#ffffff', margin: '0 0 20px' }}>
                 © {new Date().getFullYear()} Audiophile. All rights reserved.
               </Text>
 
               <Row style={{ textAlign: 'center', margin: '0 auto' }}>
-                <Column style={{ width: '25%', display: 'inline-block' }}>
+               <Column style={{ width: '25%', display: 'inline-block' }}>
                   <Link
                     href="https://facebook.com"
                     style={{
@@ -170,7 +171,7 @@ export const ShippingUpdate = ({ order }: { order: any }) => (
                   </Link>
                 </Column>
                 <Column style={{ width: '25%', display: 'inline-block' }}>
-                  <Link
+                 <Link
                     href="https://twitter.com"
                     style={{
                       color: '#ffffff',
@@ -192,7 +193,7 @@ export const ShippingUpdate = ({ order }: { order: any }) => (
                     style={{
                       color: '#ffffff',
                       textDecoration: 'none',
-                      margin: '0 10px',
+                     margin: '0 10px',
                     }}
                   >
                     <Img

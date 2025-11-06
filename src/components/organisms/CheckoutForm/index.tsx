@@ -1,4 +1,4 @@
-// src/components/organisms/CheckoutForm.tsx
+//src/components/organisms/CheckoutForm.tsx
 import {
 	Box,
 	Heading,
@@ -13,7 +13,7 @@ import {
 	useToast,
 } from '@chakra-ui/react'
 import { useState, useRef } from 'react'
-import { useForm, SubmitHandler } from 'react-hook-form'
+import { useForm,SubmitHandler } from 'react-hook-form'
 import { useMutation } from 'convex/react'
 import { api } from '../../../../convex/_generated/api'
 import { generateEmailHTML } from '../../../lib/emailTemplate'
@@ -40,7 +40,7 @@ type FormData = {
 }
 
 const CheckoutForm = (): JSX.Element => {
-	const {
+const {
 		register,
 		handleSubmit,
 		formState: { errors },
@@ -51,14 +51,14 @@ const CheckoutForm = (): JSX.Element => {
 	const toast = useToast()
 	const { onCheckoutModalOpen } = useModal()
 	const items = useSelector(cartItems)
-	const createOrder = useMutation(api.createOrder.default)
+	const createOrder= useMutation(api.createOrder.default)
 
 	const [loading, setLoading] = useState(false)
 	const [isDisabled, setIsDisabled] = useState(true)
 	const paymentMethod = watch('paymentMethod') || 'e-Money'
 	const formRef = useRef<HTMLFormElement>(null)
 
-	const { getRootProps, getRadioProps } = useRadioGroup({
+	const { getRootProps, getRadioProps} = useRadioGroup({
 		name: 'paymentMethod',
 		defaultValue: 'e-Money',
 		onChange: value => setValue('paymentMethod', value as any),
@@ -67,7 +67,7 @@ const CheckoutForm = (): JSX.Element => {
 
 	const onSubmit: SubmitHandler<FormData> = async data => {
 		if (loading) return
-		setLoading(true)
+setLoading(true)
 		try {
 			// ... save order ...
 			const orderData = {
@@ -89,7 +89,7 @@ const CheckoutForm = (): JSX.Element => {
 				})),
 				total: items.reduce((s, i) => s + i.price * i.quantity, 0),
 				grandTotal: items.reduce((s, i) => s + i.price * i.quantity, 0) + 50 + 1079,
-			}
+}
 
 			// 1. Save to Convex
 			const orderResult = await createOrder(orderData)
@@ -98,7 +98,7 @@ const CheckoutForm = (): JSX.Element => {
 
 
 			// SEND EMAIL — NO TIMEOUT
-			const emailResponse = await fetch("/api/send-email", {
+			const emailResponse = awaitfetch("/api/send-email", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
@@ -106,7 +106,7 @@ const CheckoutForm = (): JSX.Element => {
 					name: data.name,
 					orderItems: items.map(i => ({
 						name: i.shortName,
-						quantity: i.quantity,
+						quantity:i.quantity,
 						price: i.price,
 					})),
 					grandTotal: orderData.grandTotal,
@@ -123,13 +123,13 @@ const CheckoutForm = (): JSX.Element => {
 			dispatch(clearCart())
 			toast({ title: "Order Confirmed!", status: "success" })
 
-		} catch (err: any) {
-			toast({ title: "Failed", description: err.message, status: "error" })
+		} catch (err: unknown) {
+			toast({ title: "Failed", description: (err as Error).message, status: "error" })
 		} finally {
 			setLoading(false)
 		}
 
-	}
+}
 	return (
 		<Stack
 			as="form"
@@ -149,7 +149,7 @@ const CheckoutForm = (): JSX.Element => {
 				bg="#FFFFFF"
 				borderRadius="0.5rem"
 				p={{ base: '1.5rem', lg: '3.375rem' }}
-				flex="1"
+flex="1"
 				width="100%"
 				maxW={{ lg: '45.625rem' }}
 				boxShadow="0 20px 40px rgba(0,0,0,0.05)"
@@ -163,7 +163,7 @@ const CheckoutForm = (): JSX.Element => {
 					mb="2.5rem"
 				>
 					Checkout
-				</Heading>
+</Heading>
 
 				{/* BILLING DETAILS */}
 				<Box as="fieldset" mb="3.3125rem" width="100%">
@@ -174,7 +174,7 @@ const CheckoutForm = (): JSX.Element => {
 							placeholder="Alexei Ward"
 							{...register('name', {
 								required: "Can't be empty",
-								pattern: { value: /^[^<>%$#^*]*$/, message: 'Invalid name' },
+								pattern: { value: /^[^<>%$#^*]*$/, message: 'Invalidname' },
 							})}
 							errors={errors.name}
 						/>
@@ -185,7 +185,7 @@ const CheckoutForm = (): JSX.Element => {
 							{...register('emailAddress', {
 								required: "Can't be empty",
 								pattern: {
-									value: /^[\w.%+-]+@[\w.-]+\.[A-Za-z]{2,}$/,
+								value: /^[\w.%+-]+@[\w.-]+\.[A-Za-z]{2,}$/,
 									message: 'Wrong format',
 								},
 							})}
@@ -209,12 +209,12 @@ const CheckoutForm = (): JSX.Element => {
 				{/* SHIPPING INFO */}
 				<Box as="fieldset" mb="3.3125rem" width="100%">
 					<FormLegend>Shipping Info</FormLegend>
-					<SimpleGrid columns={{ base: 1, md: 2 }} spacing="1rem" width="100%">
+				<SimpleGrid columns={{ base: 1, md: 2 }} spacing="1rem" width="100%">
 						<FormField
 							label="Address"
 							placeholder="1137 Williams Avenue"
 							{...register('address', { required: "Can't be empty" })}
-							errors={errors.address}
+errors={errors.address}
 						/>
 						<FormField
 							label="ZIP Code"
@@ -230,7 +230,7 @@ const CheckoutForm = (): JSX.Element => {
 							placeholder="New York"
 							{...register('city', { required: "Can't be empty" })}
 							errors={errors.city}
-						/>
+					/>
 						<FormField
 							label="Country"
 							placeholder="United States"
@@ -248,13 +248,13 @@ const CheckoutForm = (): JSX.Element => {
 						spacingX="1rem"
 						mb="1rem"
 						width="100%"
-					>
+				>
 						<Text fontWeight="bold" fontSize="0.75rem">
 							Payment Method
 						</Text>
 						<Stack {...group} spacing="1rem">
 							{['e-Money', 'Cash on Delivery'].map(value => {
-								const radio = getRadioProps({ value })
+								const radio = getRadioProps({ value})
 								return (
 									<Radio key={value} {...radio}>
 										{value}
@@ -288,7 +288,7 @@ const CheckoutForm = (): JSX.Element => {
 										pattern: { value: /^\d{4}$/, message: 'Wrong format' },
 									})}
 									errors={errors.eMoneyPin}
-								/>
+							/>
 							</SimpleGrid>
 						) : (
 							<HStack
@@ -304,7 +304,7 @@ const CheckoutForm = (): JSX.Element => {
 									flexShrink={1}
 								/>
 								<Text fontSize="0.9375rem" lineHeight="1.6667" opacity="0.8">
-									The ‘Cash on Delivery’ option enables you to pay in cash when
+									The ‘Cash on Delivery’ option enablesyou to pay in cash when
 									our delivery courier arrives at your residence. Just make sure
 									your address is correct so that your order will not be
 									cancelled.

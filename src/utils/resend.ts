@@ -2,6 +2,7 @@ import { Resend } from 'resend'
 import OrderConfirmation from 'components/emails/OrderConfirmation'
 import ShippingUpdate from 'components/emails/ShippingUpdate'
 import ThankYou from 'components/emails/ThankYou'
+import { Order } from 'models/Order'
 
 // Check if API key exists
 const apiKey = process.env.RESEND_API_KEY
@@ -13,7 +14,7 @@ if (apiKey) {
   console.warn('Resend API key not found. Email sending will be disabled.')
 }
 
-export async function sendOrderEmails(order: any) {
+export async function sendOrderEmails(order: Order) {
   // If Resend is not configured, skip email sending
   if (!resend) {
     console.warn('Resend not configured. Skipping email sending.')
