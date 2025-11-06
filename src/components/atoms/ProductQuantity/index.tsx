@@ -1,4 +1,13 @@
-import { Flex, Button as ChakraButton, Center } from '@chakra-ui/react'
+import { Flex, Button as ChakraButton, Center } from "@chakra-ui/react"
+import { JSX } from "react"
+
+type ProductQuantityProps = {
+  quantity: number
+  increment: () => void
+  decrement: () => void
+  width: string
+  height: string
+}
 
 const ProductQuantity = ({
   quantity,
@@ -6,45 +15,51 @@ const ProductQuantity = ({
   decrement,
   width,
   height,
-}: {
-  quantity: number
-  increment: () => void
-  decrement: () => void
-  width: string
-  height: string
-}): JSX.Element => {
+}: ProductQuantityProps): JSX.Element => {
   return (
-    <Flex bg="gray" alignItems="center" width={width} height={height}>
-      <Button sign="-" handleClick={decrement} />
-      <Center fontSize="0.8125rem" fontWeight="bold" width="20%">
+    <Flex
+      bg="gray"
+      align="center"
+      justify="space-between"
+      w={width}
+      h={height}
+      borderRadius="sm"
+    >
+      <QuantityButton label="Decrease quantity" sign="−" onClick={decrement} />
+      <Center fontSize="0.8125rem" fontWeight="bold" w="20%">
         {quantity}
       </Center>
-      <Button sign="+" handleClick={increment} />
+      <QuantityButton label="Increase quantity" sign="+" onClick={increment} />
     </Flex>
   )
 }
 
-const Button = ({
-  sign,
-  handleClick,
-}: {
+type QuantityButtonProps = {
   sign: string
-  handleClick: () => void
-}): JSX.Element => {
+  label: string
+  onClick: () => void
+}
+
+const QuantityButton = ({
+  sign,
+  label,
+  onClick,
+}: QuantityButtonProps): JSX.Element => {
   return (
     <ChakraButton
-      onClick={handleClick}
-      width="40%"
-      height="100%"
+      aria-label={label}
+      onClick={onClick}
+      w="40%"
+      h="100%"
       color="text"
       fontSize="0.9375rem"
       fontWeight="bold"
       border="none"
-      p="0"
+      p={0}
       bg="transparent"
       _hover={{
-        bg: 'lightGray',
-        color: 'accent',
+        bg: "lightGray",
+        color: "accent",
       }}
     >
       {sign}

@@ -1,11 +1,12 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Box } from "@chakra-ui/react"
+import { JSX } from "react"
 
 const Logo = (): JSX.Element => {
   return (
     <Box mr={{ sm: "auto", lg: 0 }} lineHeight="0">
-      <Link href="/" legacyBehavior>
+      <Link href="/" aria-label="Go to homepage">
         <Image
           src="/images/shared/desktop/logo.svg"
           height={25}
