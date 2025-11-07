@@ -7,7 +7,7 @@ const GoBackLink = (): JSX.Element => {
 
   return (
     <Button
-      variant="link"
+      variant="ghost"
       onClick={() => router.back()}
       mt={{ base: "2rem", sm: "1rem", lg: "5rem" }}
       fontSize="0.9375rem"
