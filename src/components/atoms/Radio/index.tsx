@@ -1,55 +1,56 @@
-import { Box, Center, useRadio, UseRadioProps } from '@chakra-ui/react'
+import { Box, Center, useRadio, UseRadioProps } from "@chakra-ui/react"
+import { JSX, ReactNode } from "react"
 
-const Radio: React.FC<UseRadioProps> = (props): JSX.Element => {
+interface CustomRadioProps extends UseRadioProps {
+  children: ReactNode
+}
+
+const Radio = (props: CustomRadioProps): JSX.Element => {
   const { getInputProps, getCheckboxProps } = useRadio(props)
-
   const input = getInputProps()
   const checkbox = getCheckboxProps()
 
   return (
     <Box
       as="label"
-      border="1px solid"
+      borderWidth="1px"
       borderColor="inputBorder"
       py="1rem"
+      pl="3.25rem"
+      mb="1rem"
       borderRadius="0.5rem"
       fontWeight="bold"
       fontSize="0.875rem"
       display="block"
-      pl="3.25rem"
       position="relative"
-      mb="1rem"
       cursor="pointer"
+      transition="border-color 0.2s ease"
       sx={{
-        'input:checked + div::after': {
-          transform: 'scale(1)',
-        },
-        '&:focus-within': {
-          borderColor: 'accent',
-        },
+        "&:focus-within": { borderColor: "accent" },
+        "input:checked + div::after": { transform: "scale(1)" },
       }}
     >
       <input {...input} />
       <Center
         {...checkbox}
-        width="20px"
-        height="20px"
-        border="1px solid"
+        w="20px"
+        h="20px"
+        borderWidth="1px"
         borderColor="inputBorder"
-        borderRadius="50%"
+        borderRadius="full"
         position="absolute"
         left="1rem"
         _after={{
           content: "''",
-          position: 'absolute',
-          bg: 'accent',
-          width: '10px',
-          height: '10px',
-          borderRadius: '50%',
-          transform: 'scale(0)',
-          transition: 'transform 0.3s linear',
+          position: "absolute",
+          bg: "accent",
+          w: "10px",
+          h: "10px",
+          borderRadius: "full",
+          transform: "scale(0)",
+          transition: "transform 0.3s linear",
         }}
-      ></Center>
+      />
       {props.children}
     </Box>
   )

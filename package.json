@@ -4,24 +4,26 @@
 	"private": true,
 	"scripts": {
 		"prebuild": "npx convex codegen",
-		"prebuild:prod": "npx convex codegen || echo 'Skipping Convex codegen in production'",
-		"build": "next build",
-		"build:prod": "npm run prebuild:prod && next build",
+		"build": "next build --no-lint",
 		"dev": "next dev",
 		"start": "next start",
-		"lint": "next lint",
-		"convex:dev": "convex dev"
+		"lint": "next lint"
 	},
 	"dependencies": {
+		"@chakra-ui/react": "^3.29.0",
+		"@reduxjs/toolkit": "^2.10.1",
 		"convex": "^1.12.0",
 		"next": "15.2.5",
-		"react": "19.1.0",
-		"react-dom": "19.1.0"
+		"nodemailer": "^7.0.10",
+		"react": "18.2.0",
+		"react-dom": "18.2.0",
+		"react-redux": "^9.2.0",
+		"resend": "^6.4.1"
 	},
 	"devDependencies": {
 		"@types/node": "^20.8.0",
-		"@types/react": "^19.1.0",
-		"@types/react-dom": "^19.1.0",
+		"@types/react": "^18.2.0",
+		"@types/react-dom": "^18.2.0",
 		"@typescript-eslint/eslint-plugin": "^6.0.0",
 		"@typescript-eslint/parser": "^6.0.0",
 		"eslint": "^8.50.0",
