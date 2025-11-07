@@ -1,4 +1,4 @@
-i nodemailerimport React from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { api } from "../_generated/api";
 import { useMutation } from "convex/react";
