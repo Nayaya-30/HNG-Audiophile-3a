@@ -10,13 +10,18 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@chakra-ui/react": "^3.29.0",
+    "@chakra-ui/react": "^2.10.9",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@reduxjs/toolkit": "^2.10.1",
     "convex": "^1.12.0",
+    "framer-motion": "^11.18.2",
     "next": "15.2.5",
     "nodemailer": "^7.0.10",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.66.0",
+    "react-intersection-observer": "^10.0.0",
     "react-redux": "^9.2.0",
     "resend": "^6.4.1"
   },
