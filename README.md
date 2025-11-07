@@ -1,229 +1,83 @@
----
+# Frontend Mentor - Audiophile e-commerce website solution
 
-<div align="center">
+This is a solution to the [Audiophile e-commerce website challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/audiophile-ecommerce-website-C8cuSd_wx).
 
-# 🎧 Audiophile – Pixel-Perfect E-Commerce
+## Table of contents
 
-**A luxury audio store built with Next.js 14, Chakra UI, Redux, Convex & Nodemailer**
+- [Overview](#overview)
+  - [Features](#features)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Continued development](#continued-development)
+  - [Useful resources](#useful-resources)
+- [Author](#author)
 
-[![Vercel Deploy](https://img.shields.io/badge/Live%20App-Vercel-black?logo=vercel)](https://audiophile-ecommerce.vercel.app)
-[![GitHub Repo](https://img.shields.io/badge/GitHub-Repo-blue?logo=github)](https://github.com/your-username/audiophile-ecommerce-website)
-[![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)](https://nextjs.org)
-[![Chakra UI](https://img.shields.io/badge/Chakra_UI-%234ED1C5.svg?logo=chakraui&logoColor=white)](https://chakra-ui.com)
-[![Convex](https://img.shields.io/badge/Convex-Backend-orange)](https://convex.dev)
-[![License](https://img.shields.io/badge/License-MIT-green)](#)
+## Overview
 
-</div>
+### Features
 
----
+Users are able to:
 
-## 🛍️ Overview
+- Add/Remove products from the cart
+- Edit product quantities in the cart
+- Fill in all fields in the checkout
+- Receive form validations if fields are missed or incorrect during checkout
+- See correct checkout totals depending on the products in the cart
+  - Shipping always adds $50 to the order
+  - VAT is calculated as 20% of the product total, excluding shipping
+- See an order confirmation modal after checking out with an order summary
+- **TODO**: Keep track of what's in the cart, even after refreshing the browser (`localStorage`)
 
-A **100% Figma-matched**, mobile-first, fully functional e-commerce experience featuring luxury audio products.  
-Built with **Next.js 14**, **TypeScript**, **Chakra UI**, **Redux Toolkit**, **Convex real-time backend**, and **Nodemailer** for email automation.
+### Screenshot
 
-> 🚀 Fully deployed, pixel-perfect, and 100/100 Lighthouse-scored across devices.
+![](./screenshots/main-menu-ss.png)
+![](./screenshots/category-menu-ss.png)
+![](./screenshots/product-page-ss.png)
+![](./screenshots/checkout-ss.png)
 
----
+### Links
 
-## 🚀 Features
+- Solution URL: [https://www.frontendmentor.io/solutions/react-tailwindcss-that-was-incredibly-tough-and-fun-d-Az7rnLQVWc]
+- Live Site URL: [https://bbualdo-audiophile.netlify.app]
 
-| Feature                    | Status      | Details                                 |
-| -------------------------- | ----------- | --------------------------------------- |
-| 🎨 Pixel-Perfect UI        | ✅ 100%     | 1440px → 375px responsive               |
-| 🧾 Checkout Form           | ✅ Complete | 9 fields, real-time validation          |
-| ☁️ Convex Order Storage    | ✅ Complete | Full schema + timestamps                |
-| 📧 Confirmation Email      | ✅ Complete | Responsive HTML receipt                 |
-| 🧾 Order Confirmation Page | ✅ Complete | Dynamic summary + “Back to Home”        |
-| 🛒 Cart Persistence        | ✅ Complete | Redux + localStorage                    |
-| ♿ Accessibility           | ✅ Complete | ARIA labels, focus states, keyboard nav |
-| 💡 Lighthouse Score        | 💯 100/100  | All devices                             |
-| 🔍 SEO + OG Tags           | ✅ Complete | Full meta                               |
+## My process
 
----
+First of all I predefined components that I will probably need and put all the files into proper folders to keep my project organised. Then I set up **React Router** paths to each category and cart. After that I started to build my components and styled it using **TailwindCSS** one by one. Meanwhile I was implementing states and logics for Hamburger Menu button. When every part of the webpage that is reusable was styled I implemented fetching data from provided JSON file and displaying it properly on the Product page. Then styling again and Product pages were completed. Meanwhile I had some issues with displaying data after page deployment. It was a long "cat & mouse" game with fetched JSON and image paths, but I did it. Yay!
+Each product has to be shown in detail after clicking "See Product" button, so I used provided "slug" property in each of them to give an id to each path in **React Router**.
+After that some **JavaScript** logic and I finished implementing adding to cart, change quantity and merge products if added product already existed in the cart. In the end I coded and styled checkout page with form validation.
 
-## 🧠 Tech Stack
+### Built with
 
-- ⚡ **Next.js 14 (App Router)**
-- 💎 **TypeScript**
-- 🌈 **Chakra UI + Framer Motion**
-- 🧩 **Redux Toolkit**
-- 🔮 **Convex** (real-time backend)
-- 📬 **Nodemailer + Gmail SMTP**
-- 🧠 **React Hook Form + Zod**
-- ▲ **Vercel (deploy)**
+- React
+- TailwindCSS
+- CSS custom properties
+- Semantic HTML5 markup
+- Flexbox
 
----
+### What I learned
 
-<details>
-<summary><b>🧱 Project Structure (Atomic Design)</b></summary>
+1. React Router.
+2. TailwindCSS.
+3. Got more confidence in using React.
 
-src/ ├── components/ │ ├── atoms/ → FormField, Radio, CategoryLink │ ├── molecules/ → ProductLink, CartItem, Gallery │ ├── organisms/ → Hero, CheckoutForm, Modals │ └── templates/ → Home, Category, Product, Checkout ├── pages/ │ ├── index.tsx → Home │ ├── [category]/ │ └── checkout/ ├── store/ → Redux cart ├── convex/ → orders table + createOrder mutation ├── lib/ → emailTemplate.ts └── public/images/ → 70+ responsive assets
+### Continued development
 
-</details>
+1. That project shows me that I must learn better state managment approach, because I made quite a prop drilling out there. Considering Redux or Context.
 
----
+2. I don't think that Tailwind is good choice for that big projects, because when you look at JSX structure it is quite a mess. I started to learn Sass because of it's similarity to JavaScript and reusability.
 
-## ⚙️ Setup (⏱ 5 Minutes)
+3. I should probably split this App into more components. I will consider that in future projects.
 
-```bash
-git clone https://github.com/your-username/audiophile-ecommerce-website.git
-cd audiophile-ecommerce-website
+4. After that I started learning **TypeScript** for cleaner and less error prone code.
 
-# Install
-npm install
+### Useful resources
 
-# Convex: generate API
-npx convex dev --once
+- [React Router 6 Course](https://scrimba.com/learn/reactrouter6) - This helped me for a lot in understanding React Router. Bob Ziroll is just a god teacher!
 
-# Environment
-cp .env.example .env.local
+## Author
 
-.env.local
-
-EMAIL_USER=yourgmail@gmail.com
-EMAIL_PASS=your-16-digit-app-password
-NEXT_PUBLIC_CONVEX_URL=https://your-project.convex.cloud
-
-🔑 Get app password: myaccount.google.com/apppasswords
-
-
----
-
-💻 Run Locally
-
-npm run dev
-# → Open http://localhost:3000
-
-Convex runs automatically via concurrently.
-
-
----
-
-✅ Test the Full Flow
-
-1. Add XX99 Mark II → Cart
-
-
-2. Click Checkout
-
-
-3. Fill form (use real email)
-
-
-4. Submit →
-
-Order saved in Convex
-
-Email received in <3s
-
-Success modal + summary
-
-
-
-
-
----
-
-<details>
-<summary><b>📧 Email Receipt (HTML Preview)</b></summary><!DOCTYPE html>
-<html>
-  <body style="font-family:Helvetica,Arial,sans-serif;background:#f6f6f6">
-    <div style="max-width:600px;margin:40px auto;background:white;border-radius:12px;overflow:hidden">
-      <div style="background:#D87D4A;color:white;padding:40px;text-align:center">
-        <h1>Thank You, Alex!</h1>
-        <p>Your order is confirmed</p>
-      </div>
-      <div style="padding:40px">
-        <h3>Your Items</h3>
-        <table style="width:100%;border-collapse:collapse">
-          <tr><td>XX99 Mark II × 1</td><td align="right">$2,999.00</td></tr>
-        </table>
-        <div style="font-size:24px;font-weight:bold;color:#D87D4A;text-align:right;margin-top:20px">
-          Grand Total: $3,127.00
-        </div>
-      </div>
-      <div style="background:#141414;color:#aaa;padding:30px;text-align:center;font-size:14px">
-        Audiophile • <a href="https://audiophile-ecommerce.vercel.app" style="color:#D87D4A">View Order</a>
-      </div>
-    </div>
-  </body>
-</html>
-
-</details>
----
-
-▲ Deploy to Vercel (1-Click)
-
-> Auto-detects Convex + environment variables.
-
-
-
-
----
-
-📜 Scripts
-
-"scripts": {
-  "dev": "concurrently \"npx convex dev\" \"next dev\"",
-  "build": "npx convex export && next build",
-  "start": "next start",
-  "lint": "next lint"
-}
-
-
----
-
-🧩 Acceptance Criteria Met
-
-✅ Pixel-perfect across mobile / tablet / desktop
-✅ Checkout → Convex save → email → confirmation page
-✅ Full validation (regex, required, edge cases)
-✅ Accessibility: ARIA, focus rings, keyboard nav
-✅ Code quality: Atomic design, path aliases, TypeScript
-💯 Lighthouse 100/100 on all devices
-
-
----
-
-🌍 Live Demo
-
-Live URL: https://audiophile-ecommerce.vercel.app
-Checkout Test: Use email test@example.com → check spam
-Convex Dashboard: See live orders in real-time
-
-
----
-
-📊 Git History (Investor-Ready)
-
-feat(organisms): Hero, CheckoutForm, Modals
-
-feat(convex): orders table + createOrder
-
-feat(email): HTML receipts via Nodemailer
-
-refactor: '@/...' imports + 100/100 Lighthouse
-
-
-
----
-
-🧭 Next Steps (Already Planned)
-
-[ ] 💳 Add Stripe Payments
-
-[ ] 🌗 Dark Mode Toggle
-
-[ ] 🧾 Order History Page (/orders)
-
-[ ] 🧠 Admin Dashboard
-
-[ ] 📱 SMS Alerts (Twilio)
-
----
-
-— Built with ❤️ by [Usouff]
-
----
-```
+- Website - [BBualdo](https://bbualdo-portfolio.netlify.app)
+- Frontend Mentor - [@bbualdo](https://www.frontendmentor.io/profile/bbualdo)
