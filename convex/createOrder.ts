@@ -1,7 +1,6 @@
 // convex/createOrder.ts
-import { mutation } from "./_generated/server"
-import { v } from "convex/values"
-import sendEmail from "./sendEmail"
+import { mutation } from './_generated/server'
+import { v } from 'convex/values'
 
 export default mutation({
   args: {
@@ -27,32 +26,13 @@ export default mutation({
     grandTotal: v.number(),
   },
   handler: async (ctx, args) => {
-    // Insert order into database
-    const orderId = await ctx.db.insert("orders", {
+    const order = {
       ...args,
+      status: "pending" as const,
       createdAt: Date.now(),
-      status: "confirmed",
-    })
-    
-    // Create full order object with ID for email processing
-    const fullOrder = { 
-      ...args, 
-      _id: orderId, 
-      createdAt: Date.now()
     };
     
-    // Send confirmation email
-    const emailResult = await sendEmail(ctx, { order: fullOrder })
-    
-    if (!emailResult.success) {
-      console.error(`Failed to send email: ${emailResult.error}`)
-      // Consider if you want to roll back the order creation in this case
-      // You could update the order status to 'email_failed' for follow-up
-      await ctx.db.patch(orderId, {
-        status: `confirmed_email_failed: ${emailResult.error}`
-      });
-    }
-    
-    return fullOrder;
+    const orderId = await ctx.db.insert("orders", order);
+    return orderId;
   },
 })

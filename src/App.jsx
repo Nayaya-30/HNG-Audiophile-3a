@@ -7,6 +7,7 @@ import Product from './pages/Product';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
+import {ConvexProvider, ConvexReactClient} from 'convex/react'
 
 import data from './data/data.json';
 
@@ -95,8 +96,11 @@ const App = () => {
 		setTotalPrice(0);
 	};
 
+	const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL)
+
 	return (
 		<>
+		<ConvexProvider client={convex}>
 			<BrowserRouter>
 				<Routes>
 					<Route
@@ -134,6 +138,7 @@ const App = () => {
 					</Route>
 				</Routes>
 			</BrowserRouter>
+			</ConvexProvider>
 		</>
 	);
 };

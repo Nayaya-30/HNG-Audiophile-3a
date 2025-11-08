@@ -11,8 +11,9 @@ const Checkout = (props) => {
 	const [selectedPaymentMethod, setSelectedPaymentMethod] =
 		React.useState('e-Money');
 
-	// Convex mutation hook
-	const createOrderMutation = useMutation(api.createOrder);
+	// Convex mutation hooks
+	const createOrderMutation = useMutation(api.createOrder.default);
+	const sendEmailMutation = useMutation(api.sendEmail.default);
 
 	const handlePaymentMethodChange = (event) => {
 		setSelectedPaymentMethod(event.target.value);
@@ -24,7 +25,7 @@ const Checkout = (props) => {
 		phoneNumber: '',
 		address: '',
 		zipCode: '',
-		city: '',
+city: '',
 		country: '',
 		eMoneyNumber: '',
 		eMoneyPin: '',
@@ -42,7 +43,7 @@ const Checkout = (props) => {
 		setFormData({ ...formData, [name]: value });
 	};
 
-	const handleFormSubmit = (e) => {
+	const handleFormSubmit = async (e) => {
 		e.preventDefault();
 
 		const newFormErrors = {};
@@ -50,7 +51,7 @@ const Checkout = (props) => {
 		// Basic field checks
 		if (!formData.name.trim()) newFormErrors.name = 'Name is required';
 		if (!formData.address.trim())
-			newFormErrors.address = 'Address is required';
+newFormErrors.address = 'Address is required';
 		if (!formData.zipCode.trim())
 			newFormErrors.zipCode = 'ZIP Code is required';
 		if (!formData.city.trim()) newFormErrors.city = 'City is required';
@@ -92,18 +93,42 @@ const Checkout = (props) => {
 				city: formData.city,
 				country: formData.country,
 				paymentMethod: selectedPaymentMethod,
-				items: props.cart,
+				eMoneyNumber:
+					selectedPaymentMethod === 'e-Money'
+						? formData.eMoneyNumber
+						: undefined,
+				eMoneyPin:
+					selectedPaymentMethod === 'e-Money'
+						? formData.eMoneyPin
+						: undefined,
+				items: props.cart.map((item) => ({
+					id: item.id || item._id,
+					name: item.name,
+					price: item.price,
+					quantity: item.quantity,
+				})),
 				total: props.totalPrice,
 				grandTotal: Math.floor(
 					props.totalPrice + 50 + props.totalPrice * 0.2
 				),
 			};
 
-			createOrderMutation(orderData)
-				.then(() => setSuccess(true))
-				.catch((error) =>
-					console.error('Error creating order:', error)
-				);
+			try {
+				// Create the order in Convex
+				await createOrderMutation(orderData);
+
+				// Send confirmation email
+				await sendEmailMutation({
+					to: formData.email,
+					name: formData.name,
+					orderItems: orderData.items,
+					grandTotal: orderData.grandTotal,
+				});
+
+				setSuccess(true);
+			} catch (error) {
+				console.error('Error creating order or sending email:', error);
+			}
 		}
 	};
 
@@ -114,7 +139,8 @@ const Checkout = (props) => {
 			<div className='flex items-center gap-4'>
 				<img
 					src={item.image}
-					className='w-16 h-16 rounded-[8px]'
+				className='w-16 h-16 rounded-[8px]'
+				alt={item.name}
 				/>
 				<div className='flex flex-col'>
 					<p className='text-[15px] font-bold leading-[25px] text-black'>
@@ -152,7 +178,223 @@ const Checkout = (props) => {
 					<h3>Checkout</h3>
 					<form onSubmit={handleFormSubmit}>
 						{/* Billing Details */}
-						{/* ... all your fields remain here — cleaned & fixed for spacing ... */}
+						<div className='mt-[41px]'>
+							<div className='flex items-center justify-between'>
+								<p className='text-cream text-[13px] font-bold uppercase leading-[25px] tracking-wide'>
+									Billing Details
+								</p>
+							</div>
+
+							<div className='flex xs:flex-col md:flex-row items-center gap-4 mt-4'>
+								<div className='flex flex-col w-full'>
+									<label
+										htmlFor='name'
+										className={`text-xs font-bold ${
+											formErrors.name
+												? 'text-red-600'
+												:'text-black'
+										}`}>
+										Name
+									</label>
+									<p className='text-red-600 text-xs font-medium'>
+										{formErrors.name}
+									</p>
+									<input
+										type='text'
+										id='name'
+										name='name'
+										placeholder='Alexei Ward'
+										value={formData.name}
+										onChange={handleInputChange}
+										className={`placeholder:text-[14px] text-black font-bold py-[18px] px-[24px] bg-white rounded-lg border border-stone-300 focus:outline-cream caret-cream mt-[9px] ${
+											formErrors.name? 'border-red-600'
+												: ''
+										}`}
+									/>
+								</div>
+							</div>
+
+							<div className='flex xs:flex-col md:flex-row items-center gap-4 mt-4'>
+								<div className='flex flex-col w-full'>
+								<label
+										htmlFor='email'
+										className={`text-xs font-bold ${
+											formErrors.email
+												? 'text-red-600'
+												: 'text-black'
+										}`}>
+										Email Address
+									</label>
+									<p className='text-red-600 text-xs font-medium'>
+										{formErrors.email}
+									</p>
+									<input
+										type='email'
+										id='email'
+										name='email'
+										placeholder='alexei@mail.com'
+										value={formData.email}
+										onChange={handleInputChange}
+										className={`placeholder:text-[14px] text-black font-bold py-[18px] px-[24px] bg-white rounded-lg border border-stone-300 focus:outline-cream caret-cream mt-[9px] ${
+											formErrors.email? 'border-red-600'
+												: ''
+										}`}
+									/>
+								</div>
+							</div>
+
+							<div className='flex xs:flex-col md:flex-row items-center gap-4 mt-4'>
+								<div className='flex flex-col w-full'>
+								<label
+										htmlFor='phoneNumber'
+										className={`text-xs font-bold ${
+											formErrors.phoneNumber
+												? 'text-red-600'
+												: 'text-black'
+										}`}>
+										Phone Number
+									</label>
+									<p className='text-red-600 text-xs font-medium'>
+										{formErrors.phoneNumber}
+									</p>
+									<input
+										type='tel'
+										id='phoneNumber'
+										name='phoneNumber'
+										placeholder='+1 202-555-0136'
+										value={formData.phoneNumber}
+										onChange={handleInputChange}
+										className={`placeholder:text-[14px]text-black font-bold py-[18px] px-[24px] bg-white rounded-lg border border-stone-300 focus:outline-cream caret-cream mt-[9px] ${
+											formErrors.phoneNumber? 'border-red-600'
+												: ''
+										}`}
+									/>
+								</div>
+							</div>
+						</div>
+
+						<div className='mt-[41px]'>
+							<div className='flex items-center justify-between'>
+								<p className='text-cream text-[13px] font-bold uppercase leading-[25px] tracking-wide'>
+									Shipping Info
+								</p>
+							</div>
+
+							<div className='flex flex-col w-full mt-4'>
+								<div className='flex flex-col w-full'>
+									<label
+										htmlFor='address'
+										className={`text-xs font-bold ${
+											formErrors.address
+												? 'text-red-600'
+												: 'text-black'
+										}`}>
+										Your Address
+									</label>
+									<p className='text-red-600 text-xs font-medium'>
+										{formErrors.address}
+									</p>
+									<input
+										type='text'
+									id='address'
+										name='address'
+										placeholder='1137 Williams Avenue'
+										value={formData.address}
+										onChange={handleInputChange}
+										className={`placeholder:text-[14px] text-black font-bold py-[18px] px-[24px] bg-white rounded-lg border border-stone-300 focus:outline-cream caret-cream mt-[9px] ${
+											formErrors.address? 'border-red-600'
+												: ''
+										}`}
+									/>
+								</div>
+							</div>
+
+							<div className='flex xs:flex-col md:flex-row items-center gap-4 mt-4'>
+								<div className='flex flex-col w-full'>
+								<label
+										htmlFor='zipCode'
+										className={`text-xs font-bold ${
+											formErrors.zipCode
+												? 'text-red-600'
+												: 'text-black'
+										}`}>
+										ZIP Code
+									</label>
+									<p className='text-red-600 text-xs font-medium'>
+										{formErrors.zipCode}
+									</p>
+									<input
+										type='text'
+										id='zipCode'
+										name='zipCode'
+										placeholder='10001'
+										value={formData.zipCode}
+										onChange={handleInputChange}
+										className={`placeholder:text-[14px] text-black font-bold py-[18px] px-[24px] bg-white rounded-lg border border-stone-300 focus:outline-cream caret-cream mt-[9px] ${
+											formErrors.zipCode
+												? 'border-red-600'
+												: ''
+										}`}
+									/>
+								</div>
+
+								<div className='flex flex-col w-full'>
+									<label
+										htmlFor='city'
+										className={`text-xs font-bold ${
+											formErrors.city
+												?'text-red-600'
+												: 'text-black'
+										}`}>
+										City
+									</label>
+									<p className='text-red-600 text-xs font-medium'>
+										{formErrors.city}
+									</p>
+									<input
+										type='text'
+									id='city'
+										name='city'
+										placeholder='New York'
+										value={formData.city}
+										onChange={handleInputChange}
+										className={`placeholder:text-[14px] text-black font-bold py-[18px] px-[24px] bg-white rounded-lg border border-stone-300focus:outline-cream caret-cream mt-[9px] ${
+											formErrors.city? 'border-red-600'
+												: ''
+										}`}
+									/>
+								</div>
+							</div>
+
+							<div className='flex xs:flex-col md:flex-row items-center gap-4 mt-4'>
+								<div className='flex flex-col w-full'>
+								<label
+										htmlFor='country'
+										className={`text-xs font-bold ${
+											formErrors.country
+												? 'text-red-600'
+												: 'text-black'
+										}`}>
+										Country
+									</label>
+									<p className='text-red-600 text-xs font-medium'>
+										{formErrors.country}
+									</p>
+									<input
+										type='text'
+										id='country'
+										name='country'
+										placeholder='United States'
+										value={formData.country}
+										onChange={handleInputChange}
+										className={`placeholder:text-[14px] text-black font-bold py-[18px] px-[24px] bg-white rounded-lg border border-stone-300 focus:outline-cream caret-cream mt-[9px] ${
+											formErrors.country? 'border-red-600'
+												: ''
+										}`}
+									/>
+								</div>
+							</div>
+						</div>
 
 						{/* Payment Section */}
 						<div className='mt-[61px]'>
@@ -167,7 +409,7 @@ const Checkout = (props) => {
 									Payment Methods
 								</label>
 								<div className='flex flex-col flex-1 gap-4'>
-									<div className='flex items-center gap-4 p-[18px] rounded-lg border border-stone-300 hover:border-cream transition-all duration-150'>
+									<div className='flex items-center gap-4 p-[18px] rounded-lg border border-stone-300 hover:border-cream transition-allduration-150'>
 										<input
 											type='radio'
 											className='cursor-pointer accent-cream'
@@ -188,7 +430,7 @@ const Checkout = (props) => {
 											type='radio'
 											className='cursor-pointer accent-cream'
 											name='payment'
-											value='Cash on Delivery'
+											value='CashonDelivery'
 											checked={
 												selectedPaymentMethod ===
 												'Cash on Delivery'
@@ -207,7 +449,8 @@ const Checkout = (props) => {
 						{selectedPaymentMethod === 'e-Money' && (
 							<div className='flex xs:flex-col md:flex-row items-center gap-4 mt-4'>
 								<div className='flex flex-col w-full'>
-									<label
+<label
+										htmlFor='eMoneyNumber'
 										className={`text-xs font-bold ${
 											formErrors.eMoneyNumber
 												? 'text-red-600'
@@ -220,6 +463,7 @@ const Checkout = (props) => {
 									</p>
 									<input
 										type='text'
+										id='eMoneyNumber'
 										name='eMoneyNumber'
 										placeholder='238521993'
 										value={formData.eMoneyNumber}
@@ -228,12 +472,13 @@ const Checkout = (props) => {
 											formErrors.eMoneyNumber
 												? 'border-red-600'
 												: ''
-										}`}
+}`}
 										maxLength={9}
 									/>
 								</div>
 								<div className='flex flex-col w-full'>
 									<label
+										htmlFor='eMoneyPin'
 										className={`text-xs font-bold ${
 											formErrors.eMoneyPin
 												? 'text-red-600'
@@ -242,17 +487,17 @@ const Checkout = (props) => {
 										e-Money PIN
 									</label>
 									<p className='text-red-600 text-xs font-medium'>
-										{formErrors.eMoneyPin}
+									{formErrors.eMoneyPin}
 									</p>
 									<input
 										type='text'
+										id='eMoneyPin'
 										name='eMoneyPin'
 										placeholder='6891'
 										value={formData.eMoneyPin}
 										onChange={handleInputChange}
 										className={`placeholder:text-[14px] text-black font-bold py-[18px] px-[24px] bg-white rounded-lg border border-stone-300 focus:outline-cream caret-cream mt-[9px] ${
-											formErrors.eMoneyPin
-												? 'border-red-600'
+											formErrors.eMoneyPin? 'border-red-600'
 												: ''
 										}`}
 										maxLength={4}
@@ -269,7 +514,7 @@ const Checkout = (props) => {
 									alt='Cash on Delivery'
 								/>
 								<p className='text-black/50 text-[15px] font-medium leading-[25px]'>
-									The ‘Cash on Delivery’ option enables you to
+									The 'Cash on Delivery' option enables you to
 									pay in cash when our delivery courier
 									arrives at your residence. Just make sure
 									your address is correct so that your order
@@ -277,10 +522,18 @@ const Checkout = (props) => {
 								</p>
 							</div>
 						)}
+
+						<div className='mt-8'>
+							<button
+								type='submit'
+								className='btn w-full bg-cream text-white hover:bg-cream-light transition-all duration-150'>
+								Continue & Pay
+							</button>
+						</div>
 					</form>
 				</section>
 
-				{/* Summary Section */}
+			{/* Summary Section */}
 				<section className='rounded-[8px] p-8 bg-white xs:w-full xl:w-auto'>
 					<h6 className='h6 text-black'>Summary</h6>
 					<div className='flex flex-col items-center gap-6 py-8 overflow-y-auto max-h-[304px] xs:w-full lg:w-[284px]'>
@@ -324,14 +577,6 @@ const Checkout = (props) => {
 							</h6>
 						</div>
 					</div>
-
-					<div className='mt-8'>
-						<button
-							onClick={handleFormSubmit}
-							className='btn w-full bg-cream text-white hover:bg-cream-light transition-all duration-150'>
-							Continue & Pay
-						</button>
-					</div>
 				</section>
 			</div>
 
@@ -341,7 +586,7 @@ const Checkout = (props) => {
 					<div className='fixed top-0 bottom-0 left-0 right-0 bg-black/50 z-[50]' />
 					<section className='fixed xs:left-4 xs:right-4 md:left-[20%] lg:left-[35%] xs:top-32 md:top-[222px] bg-white xs:w-auto md:w-[540px] h-[581px] flex flex-col justify-center xs:p-8 md:p-12 z-50 rounded-lg'>
 						<img
-							src={successLogo}
+src={successLogo}
 							alt='Success'
 						/>
 						<h3 className='xs:mt-[23px] md:mt-[33px]'>
@@ -362,7 +607,7 @@ const Checkout = (props) => {
 								<h6 className='font-bold text-white ml-8'>
 									${' '}
 									{Math.floor(
-										props.totalPrice +
+									props.totalPrice +
 											50 +
 											props.totalPrice * 0.2
 									)}

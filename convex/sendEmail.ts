@@ -1,65 +1,41 @@
 // convex/sendEmail.ts
-import { mutation } from "./_generated/server"
-import nodemailer from "nodemailer"
-import { generateEmailHTML } from "../src/lib/emailTemplate"
-import type { NextApiRequest, NextApiResponse } from "next"
+import { mutation } from './_generated/server'
+import { v } from 'convex/values'
 
-interface OrderItem {
-  name: string
-  price: number
-  quantity: number
-}
-
-const transporter = nodemailer.createTransport({
-	host: "smtp.gmail.com",
-	port: 587,
-	secure: false,
-	auth: {
-		user: process.env.EMAIL_USER,
-		pass: process.env.EMAIL_PASS,
-	},
+export default mutation({
+  args: {
+    to: v.string(),
+    name: v.string(),
+    orderItems: v.array(
+      v.object({
+        name: v.string(),
+        price: v.number(),
+        quantity: v.number(),
+      })
+    ),
+    grandTotal: v.number(),
+  },
+  handler: async (ctx, args) => {
+    // In a real implementation, you would integrate with an email service here
+    // For now, we'll just log the email data
+    console.log('Sending email to:', args.to);
+    console.log('Order details:', args);
+    
+    // If you want to make an actual HTTP request to your API endpoint:
+    /*
+    const response = await fetch('https://your-deployment-url.vercel.app/api/send-email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(args),
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to send email: ${response.statusText}`);
+    }
+    */
+    
+    return { success: true };
+  },
 })
-
-export default async function handler(
-	req: NextApiRequest,
-	res: NextApiResponse
-) {
-	if (req.method !== "POST") return res.status(405).end()
-
-  // THIS LINE FIXES GMAIL ON TERMUX
-  await new Promise(r => setTimeout(r, 2000))
-  
-	// if (req.method !== "POST") {
-	//	return res.status(405).json({ error: "Method not allowed" })
-	// }
-
-	console.log("PAYLOAD:", req.body)
-
-	const {
-		to,
-		name,
-		orderItems = [],
-		grandTotal = 0
-	} = req.body
-
-	const total = Number(grandTotal)
-	if (!to || !name || !Array.isArray(orderItems) || total <= 0) {
-		return res.status(400).json({
-			error: "Invalid data",
-			to, name, items: orderItems.length, total
-		})
-	}
-
-	try {
-		await transporter.sendMail({
-			from: '"Audiophile" <noreply@audiophile.com>',
-			to,
-			subject: `Order Confirmed, ${name}!`,
-			generateEmailHTML,
-		})
-		res.status(200).json({ success: true })
-	} catch (error: unknown) {
-		console.error("EMAIL ERROR:", (error as Error).message)
-		res.status(500).json({ error: "Failed to send", details: (error as Error).message })
-	}
-}
